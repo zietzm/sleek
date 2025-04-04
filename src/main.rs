@@ -15,6 +15,11 @@ fn main() {
         uppercase: options.uppercase,
         lines_between_queries: options.lines_between_queries,
         ignore_case_convert: None,
+        inline: false,
+        joins_as_top_level: false,
+        max_inline_arguments: None,
+        max_inline_block: 50,
+        max_inline_top_level: None,
     };
 
     let result = || -> Result<(), Error> {
@@ -43,7 +48,8 @@ fn main() {
                         let mut input = String::new();
                         fs::File::open(&path)?.read_to_string(&mut input)?;
 
-                        let mut formatted = format(&input, &QueryParams::default(), &format_options);
+                        let mut formatted =
+                            format(&input, &QueryParams::default(), &format_options);
 
                         if options.trailing_newline && !formatted.ends_with('\n') {
                             writeln!(&mut formatted)?;
